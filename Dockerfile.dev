@@ -1,0 +1,10 @@
+FROM golang:latest
+
+WORKDIR /api
+
+COPY . .
+
+RUN go mod download -x
+RUN go get github.com/githubnemo/CompileDaemon
+
+ENTRYPOINT CompileDaemon -directory=/api -build="go build -o /build/api ./cmd/api" -command=/build/api -log-prefix=false
